@@ -1,0 +1,77 @@
+
+https://account.alpha.net.bd/login
+django app deploy in cpanel
+https://www.youtube.com/watch?v=h2w8oNw_W80
+https://www.youtube.com/watch?v=S-aLcjcFSKw
+https://www.youtube.com/watch?v=Y1jJPVhanzU ---for github
+https://www.youtube.com/watch?v=l5zQ-EgHJ9o --for github
+*** https://www.youtube.com/watch?v=nvq7NNSfKdw&t=34s ---mySQL DB 
+*** https://www.youtube.com/watch?v=dJWVL15Jpws
+
+To setup requirements: pip freeze > requirements.txt
+To install terminal: pip install -r /path/to/requirements.txt  pip install -r requirements.txt
+To collect static files: python manage.py collectstatic
+Zip the main project:
+To install db client: pip install mysqlclient
+
+source /home/abirhkha/virtualenv/ahk_profile/3.11/bin/activate && cd /home/abirhkha/ahk_profile
+
+DB_user:abirhkha_ahk570
+passowrd: OaH2oXFu2HEr
+Database: abirhkha_profile
+
+login your cpanel:
+
+
+
+jLX%8W+?lMd%
+
+
+def application(environ, start_response):
+	start_response('200 Ok', [('Content-Type', 'text/plan')])
+	message = 'It works! \n'
+	version = 'Python %s \n' % sys.version.split()[0]
+	response = '\n'.join([message, version])
+	return [response.encode()]
+
+docs:
+with github: https://www.gyford.com/phil/writing/2022/05/24/hosting-django-cpanel/
+With github: https://medium.com/@pyzimos/deploying-django-web-application-using-cpanel-6687b8057439
+setup db: https://freedjango.com/deploy-django-on-shared-hosting-cpanel/
+https://parmarnaitik0909.medium.com/deploying-hosting-a-django-website-on-cpanel-with-git-version-control-6e8dce70a316
+
+for Cpanel
+git remote add prod ssh://abirhkha@abirhkhandokar.com:7525/home/abirhkha/repositories/Abir
+
+Git Actions:
+https://www.youtube.com/watch?v=UNWIXYSZfZY
+https://www.youtube.com/watch?v=qJPLFDtEi1I
+https://www.youtube.com/watch?v=xjPkD0aXyPs
+https://www.youtube.com/watch?v=WrNdnN3ggyc
+git remote add origin ssh://abirhkha@abirhkhandokar.com:7525/home/abirhkha/aiquestdemö
+git push -u origin main
+
+python manage.py check --deploy
+
+static/media file:
+https://www.youtube.com/watch?v=EZSvsgemDJ0
+https://codinggear.blog/django-static-files-and-django-collectstatic/
+
+https://testdriven.io/blog/django-static-files/
+
+passenger_wsgi.py:
+import os
+import sys
+from Abir.wsgi import application
+
+
+Pre-requisits to deploy in production:
+
+settings.py
+=======================
+DEBUG = False
+SECRET_KEY=
+# Read SECRET_KEY from an environment variable
+import os
+SECRET_KEY = os.environ['SECRET_KEY']
+

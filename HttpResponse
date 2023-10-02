@@ -1,0 +1,7 @@
+
+to print :
+from django.http import HttpResponse
+
+return HttpResponse(Cart_item.product)
+
+exit() # Not to proceed next

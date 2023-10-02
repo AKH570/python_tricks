@@ -1,0 +1,48 @@
+basics of forms in django:
+
+
+views.py:
+
+def student_func(request):
+	if(request.method=='POst'):
+		form=StudentForm(request.POST):
+			if(form.is_valid()):  			#https://docs.djangoproject.com/en/4.2/ref/forms/api/
+				nm =form.cleaned_data['name'] #forms.py>>name
+				em =form.cleaned_data['email']
+				pw =form.cleaned_data['password']
+				
+				reg = User(name=nm,email=em, password=pw) => if want to store in database.
+				reg.save()								  	
+				
+				print(nm) => [to print in terminal]
+				print(em)
+				print(pw) 
+
+
+forms.py: [ModelForm]
+
+class StudentForm(forms.ModelForm):
+	name = forms.CharFields(max_length=50, required=False)=> [if name field is required to change than model field then 															its to be define into modelform]
+	class Meta:
+
+		model= User
+
+		fields=['name','email','password'] =>this field name is model field name
+
+		labels={'name':'Enter Name','email':'Enter Email','pasword':'Enter Pass'} => this key name is model field name
+
+		help_text={'name':'Enter your full name'}
+
+		error_messages={'name':{'required':'Name is mandatory'}
+								'password':{'required':'pass is required'}}
+
+		widgets = {'password':forms.PassWordInput}
+
+
+admin.py:
+
+form .models import User
+
+@admin.register(User)
+Class UserAdmin(admin.ModelAdmin):
+list_display()

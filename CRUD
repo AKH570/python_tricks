@@ -1,0 +1,47 @@
+CRUD:
+Insert/Create:
+
+# Create Model in model.py
+# Create url path in urls.py for the new functions: urlpatterns = [path('addnew/',views.add_new,name='addnew'),]
+# Creat views function in views.py:
+	
+	def newcontact(request):
+        if request.method=='POST': 
+	        name=request.POST.get('Name') # To bring name data form html form of name field and assign it name object
+        	
+        	conn=AddContact(name=name) 
+        	conn.save()
+        	messages.success(request,'Contact added  successfully')
+    return render(request,'addcontact.html')
+
+
+Update:
+
+# Create Model in model.py
+# Create url path in urls.py for the new functions: urlpatterns = [path('updatenew/<int:pk>/',views.update_new,name='updatenew'),]
+# Creat views function in views.py:
+
+def EditContuct(request,pk):
+    get_cont= get_object_or_404(modelname,pk=pk)
+    if request.method=='POST':
+        edit_name= request.POST['Name']
+        get_cont.name=edit_name
+        get_cont.save()
+        return redirect('allcont')
+
+    else:
+        context={
+            'get_cont':get_cont
+        }
+        return render(request,'update_new.html',context)
+
+Delete:
+# Create Model in model.py
+# Create url path in urls.py for the new functions: 
+	urlpatterns = [path('updatenew/<int:pk>/',views.delete_new,name='updatenew'),]
+# Creat views function in views.py:
+	
+	def DeleteContuct(request,pk):
+    get_cont= get_object_or_404(modelname,pk=pk)
+    get_cont.delete()
+

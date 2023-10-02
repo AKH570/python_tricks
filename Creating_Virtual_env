@@ -1,0 +1,44 @@
+===========================================create virtual env======================
+
+check python version:
+python3 --version
+
+Check pip version:
+python3 -m pip --version
+
+create virtual environment:
+python3 -m venv env ('env' name your own choice)
+To activate:
+source env/bin/activate
+To deactivate:
+deactivate env
+To install or upgrade pip:
+cd pip_instal> pip3 install --upgrade pip
+
+=============================
+
+To install django:
+pip install django (if not mention version like django=3.1, it will install latest version of django)
+
+
+To check 
+pip freeze
+
+Error:
+TypeError: argument of type 'PosixPath' is not iterable
+==============================
+To uninstallation python:
+To check version: python3 --version
+To check pip version: pip --version
+To check location of installed python: which python3
+Go to installed location of python:cmd+shift+G
+copy this location upto framework then pest it go to finder
+Remove python folder in that location
+Remove python application from mac application
+check python installation again from terminal: python3 --version
+check the pip installation again in terminal: pip3 --version
+
+
+terminal: cd /usr/bin
+> ls -la py*
+>python3 --version

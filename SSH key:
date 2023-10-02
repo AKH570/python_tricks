@@ -1,0 +1,16 @@
+SSH key:
+password: )?}3cq%Xm&{X
+
+The key fingerprint is:
+SHA256:Wi7QZ7YP2l5XkkxSVBBMfsKhVcRFNW/Oqb/J+5XmSR8 
+
+
+
+Host abirhkhandokar
+    HostName abirhkhandokar.com
+    User abirhkha
+    IdentityFile ~/.ssh/abir_id_rsa
+    UseKeychain yes
+    AddKeysToAgent yes
+
+

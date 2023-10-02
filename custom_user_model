@@ -1,0 +1,170 @@
+model.py:
+==========
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+
+# Model for superadmin
+class MyAccountManager(BaseUserManager):
+    def create_user(self,first_name,last_name,username,email,password=None): #The prototype of create_user() should accept the username field, plus all required fields as arguments
+        if not email:
+            raise ValueError('User must have an email address')
+        if not username:
+            raise ValueError('User must have an email address')
+        user = self.model(
+            email = self.normalize_email(email),
+            username = username,
+            first_name = first_name,
+            last_name = last_name,
+        )
+        user.set_password(password)
+        user.save(using = self._db) # is usually defined as "default" from your database configuration in settings.py.
+        return user
+    
+    def create_superuser(self,first_name,last_name,username,email,password=None):
+        user = self.create_user(
+                email = self.normalize_email(email),
+                username = username,
+                password = password,
+                first_name = first_name,
+                last_name = last_name,
+        )
+           #permission
+        user.is_admin = True
+        user.is_active = True
+        user.is_staff = True
+        user.is_superadmin = True
+        user.save(using =self._db)
+        return user   
+#custom user model
+class Account(AbstractBaseUser):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
+    email   = models.EmailField(max_length=100,unique=True,verbose_name='Email Address')
+    phone_number = models.CharField(max_length=50)
+    
+    #required
+    date_joined = models.DateTimeField(auto_now_add=True)
+    last_login = models.DateTimeField(auto_now_add=True)
+    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_superadmin = models.BooleanField(default=True)
+
+    objects = MyAccountManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username','first_name','last_name'] #has no effect in other parts of Django, like creating a user in the admin.
+   
+
+    def __str__(self):
+        return self.email
+    def has_perm(self,perm,obj=None):
+        return self.is_admin
+    def has_module_perms(self,add_label):
+        return True
+
+
+settings.py:
+    AUTH_USER_MODEL = 'accounts.Account' #this under WSGI_APPLICATION = 'contact.wsgi.application'
+
+admin.py: 
+=============================================
+    from django.contrib import admin
+    from django.contrib.auth.admin import UserAdmin
+    from .models import Account
+
+class AccountAdmin(UserAdmin):
+    list_display = ('email','first_name','last_name','last_login','date_joined','is_active')
+    list_display_links =('email','first_name','last_name')
+    readonly_fields = ('last_login','date_joined')
+    filter_horizontal = ()
+    list_filter = ()
+    fieldsets = ()
+admin.site.register(Account,AccountAdmin)
+
+
+# Before run migration command we need to delete existing database db.sqlite3 and exising table into app like 0001initi...
+
+# Then run: python manage.py runserver to create db.sqlite3 , it will show error but make sure it is created new db.
+# then run : python manage.py makemigrations and python manage.py migrate
+
+To create super user:
+run: winpty python manage.py createsuperuser
+
+views.py
+===========
+
+from django.shortcuts import render,redirect
+from django.http import HttpResponse
+from .forms import RegistrationForm
+from .models import Account
+from django.contrib import messages
+
+# Create your views here.
+def Registration(request):
+    if request.method =='POST':
+        form = RegistrationForm(request.POST)
+                if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            phone_number = form.cleaned_data['phone_number']
+            password = form.cleaned_data['password']
+            username=email.split("@")[0]
+
+            user = Account.objects.create_user(first_name=first_name,last_name=last_name,email=email,password=password,username=username)
+            #will not use phone num in create user as this func is not containing this parameter in model form
+            user.phone_number = phone_number  #thats why we insert this code
+            user.save()
+            messages.success(request,'Registration successully done')
+            return redirect('registration')
+    else:   
+        form = RegistrationForm()
+    return render(request,'registration.html',{'form':form})
+
+
+if required to create user then we can use form.py
+
+forms.py
+=========
+class RegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': '***********',
+        'class':'form-control',
+        'autocomplete': 'off',
+        'data-toggle': 'password' ,   
+    }))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Confirm Password',
+        'class':'form-control',
+    }))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Enter First Name',
+        'class':'form-control',
+    }))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Enter Last Name',
+        'class':'form-control',
+    }))
+    email = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Email Address',
+        'class':'form-control',
+    }))
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Enter Phone Number',
+        'class':'form-control',
+    }))
+    class Meta:
+        model= Account
+        fields = ['first_name','last_name','phone_number','email','password']
+
+    def clean(self):
+        clean_data = super(RegistrationForm,self).clean()
+        password = clean_data.get('password')
+        confirm_password = clean_data.get('confirm_password')
+
+        if password != confirm_password:
+            raise forms.ValidationError(
+                'Password does not match!'
+            )

@@ -1,0 +1,8 @@
+Whaitnoise_static file config:
+
+Before that make debug=False in production as well as development site:
+> pip install whitenoise
+> Just after 'security middileware......' past this whitenoise middleware:
+		'whitenoise.middleware.WhiteNoiseMiddleware'
+> Add 'whitenoise.runserver_nostatic' on top of your installed apps
+>Finally run this command : python manage.py collectstatic

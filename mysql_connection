@@ -1,0 +1,50 @@
+
+
+
+import os
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+
+192.168.10.5:3306
+
+init.py
+import pymysql
+pymysql.install_as_MySQLdb()
+
+pip install pymysql
+to check database access:mysql -h 192.168.10.5 -u abirhkha_abir -p
+select user();
+abirhkha_abir
+Mtb570#84
+python manage.py dumpdata>data.json
+
+mylocalhost:abirhkha_abir@lxbd.alpha.net.bd
+port:3306
+
+
+mysql -h 192.168.10.5 -u abirhkha_abir -p
+USE abirhkha_abir;  
+SELECT Host, User FROM abirhkha_profile WHERE User='abirhkha_abir';
+
+>>This setting of production 'Abir' for Database is ok but the hosting db is not updated version thats why it not migrated to my sql. Please check the cpanel support mail.
+
+
+
+

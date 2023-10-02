@@ -1,0 +1,9 @@
+Performance and optimization:
+
+Django tools: django-debug-toolbar 
+
+Third-party services: Yahoo’s Yslow , Google PageSpeed
+
+Caching: It’s a sufficiently significant and powerful technique that Django includes a comprehensive caching framework.
+
+cached_property: Using the cached_property decorator saves the value returned by a property; the next time the function is called on that instance, it will return the saved value rather than re-computing it. Note that this only works on methods that take self as their only argument and that it changes the method to a property.

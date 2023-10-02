@@ -1,0 +1,134 @@
+========upload file in git========================
+git add -A
+git commit -m "add to cart"
+git remote add origin https://github.com/AKH570/SmartShop-django.git
+git remote add origin https://github.com/AKH570/Ecommerce.git
+git remote add origin https://github.com/AKH570/aiquest.git
+git branch -M main
+git push -u origin main
+https://github.com/AKH570/login.git
+
+To pull file in my desktop:
+git clone https://github.com/AKH570/SmartShop-django.git
+
+for Cpanel
+git remote add prod ssh://abirhkha@abirhkhandokar.com:7525/home/abirhkha/repositories/Abir
+
+
+below this two command is for restore project in github:
+1. git remote add origin https://github.com/AKH570/Ecommerce.git
+2. git push -u origin master
+
+
+if get error :error: remote origin already exists.
+to check url: git remote --verbose
+edit: git remote set-url origin https://github.com/AKH570/Ecommerce.git
+
+to check hidden file: cmd+shift+ . (period)
+
+if fatal authentication fail:
+git>settings>developer>Personal access tokens (classic)>Note:token-for-terminal-git>mark(repo)
+
+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
+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
+
+
+Questions:
+# After deleting app server is running correctly
+# in this assignment as per MVT Flowchart, url ->views but model and template is not accessing
+# django documente official any book are available
+
+
+print(dir(myList)
+
+git remote add origin https://github.com/AKH570/myproject.git
+
+{% url 'infocart' %}
+https://git-scm.com/book/en/v2/Git-Ba...
+https://github.com/shovoalways
+
+khandokar.13@gmail.com
+git config --global user.name Abir
+git config --global user.name
+git config --global user.emaol admin.abir@gmail.com
+To start monitor by git: git init
+To check git hidden file: ls -lart
+To check status of git: git status
+untracked=>stage=>unmodified(commit)=>untrack(if removed)or modified(if modify)
+To take a file/folder at stage:go to current folder: cd <folder name> git add <file name>
+To take all file at stage: git add -A(all)
+To take unmodified stage: git commit
+To take file earlier stage: git reset (command should do before commit)
+To take a folder at stage:go to current folder: cd <folder name> =>git add . (all file under this folder will go at stage)
+or back to earlier dir cd .. then: git add <folder name>/<file name>
+To take unmodified from stage: git commit -m "some modification in this stage "
+
+To lost file want to restore: git checkout <filename> or git checkout -f (for all file)
+To check log: git log
+To check last commit where the file are changed: git log -p -1
+To check difference any change: git diff (before commit)
+To remove a file: git rm <file name>
+To remove a file forcely: git rm <file name> -f
+To untrack file 
+To check branch: git branch
+To create new branch: git branch <branch_name>
+To switch new branch from master: git checkout -b <branchname>
+To switch other branch: git checkout <branchname>
+To merge other branch with master: switch to master => git merge <branchname where have been modified> -m
+To check status: git status
+
+===============
+******************* git ignore *******
+
+
+#create a file in root dir: .gitignore
+#go to browser and browse: gitignore.io
+#write <django> in create field
+#copy all code and past it to the .gitignore file
+#just confirm and find media folder is already included in this code
+
+=====================
+		to upload large file more than 100mb
+***************************************************
+
+>> git lfs install
+>> git lfs track "*.<extension of file>"
+>> git add .gitattributes
+>> git push --all origin master
+>> git add .
+>> git commit -m "large file to github"
+>> git push -u origin master
+
+
+git log -n 2 #to show last commit
+
+static/images/myprofile.mov
+
+
+bfg --delete-files '*.mov' --no-blob-protection
+In total, 4 object ids were changed. Full details are logged here:
+/Users/abir/Documents/AHK_Profile/Abir.bfg-report/2023-05-22/21-52-32
+544936b6
+https://www.youtube.com/watch?v=msUDPYsbABY
+
+
+Mosh git tricks:
+user info: git config --global -e
+quick help: git config -h
+To show hidden: ls -a
+To open git file: open .git
+To remove git : rm -rf .git
+To open gitignore: code .gitignore
+To show files in staging area: git ls-files
+To show short desc of log: git log --oneline
+To show log commit first to last: git log --oneline --reverse
+To show as tree of log : git ls-tree HEAD(-)1 : blobs(files) Trees(directory)
+If hang to git push -u origin then: take duplicate session of terminal and run: killall git and run again
+
+
+
+if Git, fatal: The remote end hung up unexpectedly
+git remote -v
+git remote rm origin 
+git remote add origin https://github.com/username/project.git
+

@@ -1,0 +1,46 @@
+# views.py
+#user_activation: after user.save()
+========================================
+from django.contrib.sites.shortcuts import get_current_site 
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.utils.encodeing import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.core .mail import EmailMessage
+
+current_site = get_current_site(request)
+mail_subject = 'Activate your  account.'
+message = render_to_string('accounts/acct_verification_email.html', {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+            })
+            to_email = email
+            send_email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            send_email.send()
+
+
+ #acct_verification_email.html
+ =============================
+
+ {% autoescape off %}
+    Hi {{user.first_name}}
+    Please click on below link to confirm your registration .
+    http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+    if you thik its not you , you can ignore this mail 
+
+ {% endautoescape %}
+
+
+ smtp configuration:
+ setting . py
+ ====================
+
+ EMAIL_HOST = 'smtp.gmail.com'
+ EMAIL_PORT = 587
+ EMAIL_HOST_USER = 'KHANDOKARMTB570@GMAIL. COM'
+ EMAIL_HOST_PASSWORD = ''
+ EMAIL_USE_TLS = True 

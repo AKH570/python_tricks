@@ -1,0 +1,135 @@
+
+Make a directory folder: exmp: Django_Project Creating a project: 
+		
+=========== Virtual Env setup ==========================
+virtual environment setup
+	
+	python3 -m venv env ('env' name your own choice)
+	source env/bin/activate
+	pip install django==4.0.0
+
+django-admin startproject mylogin
+		python manage.py runserver
+============ apps Creation ==============================
+Creating apps within this project:
+	python manage.py startapp home
+
+		views.py
+		from django.http import HttpResponse
+		
+		def home_func(request):
+			#return HttpResponse ("Welcome to my Sweet Home")
+			return render(request,'about/about.html')
+		
+		Create a file urls.py and config
+			from . import views
+			urlpatterns = [
+    			path('', views.home_func, name=''), ]
+
+============= master urls.py=============================
+To point the Root URLconf(sweethome.urls) at the home.urls:
+	from django.urls import include, path
+	
+	urlpatterns = [
+    	path('', include('home.urls')),
+   		path('admin/', admin.site.urls), ]
+
+============= Template==================================
+Template Configure:
+	create templates dir in root project file
+	settings.py: make variable as TEMPLATE_DIR = BASE_DIR/'templates' [ settings.py -> line no 17 ]
+	Call TEMPLATE_DIR in [ settings.py -> line no 61 ]
+		TEMPLATES =[
+				{
+					'DIRS':[TEMPLATE_DIR]
+
+				}
+		]
+	
+make individual dir as apps name:
+	templates:
+		home
+			home.html
+		common_code
+			base.html
+				<title>{% block title %}  {% endblock title %}</title>
+				<body>
+				<nav> </nav>
+					{% block content %}
+					{% endblock content %}
+				</body>
+
+============= Static dir ================================
+
+make 'static' dir under main project directory
+settings.py: make variable as STATIC_DIR = BASE_DIR/'static'
+call this STATIC_DIR under 
+	STATIC_URL = 'static/'
+	STATIC_ROOT= BASE_DIR /'static'
+
+	STATICFILES_DIRS = [STATIC_DIR,] [ line 124 in settings.py]
+
+make individual dir as below name:
+static
+	css			# all css files are saved in css dir.
+	images
+	js
+
+Tag: to know html file that it is using css/js file
+	<! DOCTYPE html >
+	{% load static %}
+    <head>
+    < link rel="stylesheet" href="{% static 'css/style.css %}" >
+
+============= Bootstrap =====================================
+Bootstrap for uses: offline:
+https://getbootstrap.com >> download >> Compiled CSS and JS >> Download >> unzip this file >> copy bootstrap.mim.css >> past mainproject > static > css.
+
+copy bootstrap.bundle.js and bootstrap.min.js file >> make js dir into static dir and past this two
+
+
+Go to html page >> {% load static %} under 
+<!DOCTYPE html> >> 
+	{% load static %}
+	.......
+	<head>
+	 	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	    <link rel="stylesheet" href="{% static 'css/navbar.css' %}"
+    </head>
+Put this js file at bottom of body tag: 
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+      	<script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+
+============ common_code directory===========================
+
+base.html ::
+	<title> {% block title %} {% endblock title %}
+	<nav> </nav> {% block content %} {% endblock content %}
+
+other html page to config navbar::
+	{% extends 'common_code/base.html' %}
+	{% block title %} Document {% endblock title %}
+
+
+	{% block content %} 
+		< html content>
+	{% endblock content %}
+
+
+
+<!--
+{% extends 'common_code/base.html' %}
+{% block title %} About {% endblock title %}
+
+{% block content %}
+    <h2>Assalamualaikum.</h2>
+    <h2>{{ about }}</h2>
+    <h2>This is my first django page</h2>
+{% endblock content %}
+-->
+===================================
+python manage.py showmigrations
+python manage.py sqlmigrate app 0001
+python manage.py makemigrations
+python manage.py migrate
+

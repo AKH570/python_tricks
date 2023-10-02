@@ -1,0 +1,14 @@
+font awsam use in web:
+
+=> Download font awsam
+=> use webfonts folder from download font awsam to project folder
+=> copy all.min.css and fontawsome.min.css file to project folder into css folder
+=> pip install fontawesomefree
+
+For Django:
+=> pip install fontawesomefree
+=>INSTALLED_APPS = [
+    'fontawesomefree'
+  ]
+=> <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+=> <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
